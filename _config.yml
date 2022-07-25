@@ -1,7 +1,7 @@
 title:              John's data analytics journey
 email:              thientintruong@gmail.com
 description:        A blog to document my journey into data analytics
-author:             John Truong
+author:             John T
 baseurl:            ""
 url:                "https://thientintruong.github.io"
 
@@ -23,3 +23,4 @@ plugins:
   - jekyll-feed
   - jekyll-paginate
   - jekyll-sitemap ## Uncomment this line to silently generate a sitemaps.org compliant sitemap for your Jekyll site
+highlighter: rouge
