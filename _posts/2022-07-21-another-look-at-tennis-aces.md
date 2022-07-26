@@ -2,7 +2,7 @@
 layout: post
 title: "Analyzing Aces in Tennis"
 subtitle: "From a different perspective"
-date: 2022-07-21 10:45:13 -0500
+date: 2022-07-25 10:45:13 -0500
 background: '/img/posts/another-look-at-tennis-aces/Roger-Federer-Wimbledon-serve-e1562882795916.png'
 ---
 # Introduction
