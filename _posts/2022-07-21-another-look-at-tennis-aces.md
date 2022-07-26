@@ -43,11 +43,20 @@ So let's see how Rochus compares with other short players. Here is a list of ten
 
 <iframe src="https://public.tableau.com/views/Playersandaces/acedonheight?:display_count=n&:showVizHome=no&:embed=true" height="650" width="800"></iframe>
 
-The data shows there is no relationship between a player's height and him getting aced on. If anything, David Ferrer (3.8 aces) does even better in this category than Novak Djokovic (4.9 aces), Rafael Nadal (5.4 aces), and Andre Agassi (5.9 aces), who are considered the best returners in history. Again, this is a pleasant surprise as I've always known David Ferrer to be an excellent returner, but this analysis shows he's probably the hardest player to ace. 
+The data shows there is no relationship between a player's height and him getting aced on. If anything, David Ferrer (3.8 aces) does even better in this category than Novak Djokovic (4.9 aces), Rafael Nadal (5.4 aces), and Andre Agassi (5.9 aces), who are considered the best returners in history. Again, this is a pleasant surprise as I've always known David Ferrer to be an excellent returner, but this analysis shows he's probably the hardest player to ace. Special shoutout to Michael Chang and Fabrice Santoro as well. What legends!
+
+# Top 10 
+So how does the current top 10 do in this category? Here is a look. Some of these players are very young and have low match counts well, but they still perform better than the players in top 10 averages above. Which tells me maybe those guys just aren't that good at returning. So nevermind what I said before about their averages getting lower if they play more matches.
+
+<iframe src="https://public.tableau.com/views/Playersandaces/currenttop10?:display_count=n&:showVizHome=no&:embed=true" height="650" width="800"></iframe>
+
+As you can see, the 2022 top 10 also perform very well against the top 10 from 2012. 
+
+<iframe src="https://public.tableau.com/views/Playersandaces/2012top10?:display_count=n&:showVizHome=no&:embed=true" height="650" width="800"></iframe>
 
 # Conclusion
 
-This analysis dispells a couple misconceptions for me: big servers are poor returners (not really), and short players are easy to easy ace (nope), and finally David Ferrer, Michael Chang, and Fabrice Santoro are absolute legends. 
+This analysis dispells a couple misconceptions for me: big servers are poor returners (not really), and short players are easy to easy ace (nope), and the current top 10 perform slightly better compared to their counterparts from 10 years ago.
 
 
 # Process
