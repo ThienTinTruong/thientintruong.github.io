@@ -1,4 +1,4 @@
-I"�<p>Hello, thanks for dropping by. I’m a life-long fan of tennis and I want to get into data analytics so I thought, why not combine to the two together to create some fun projects for myself? In this first blog post I’d like to take another look at aces stats in tennis.</p>
+I"h<p>Hello, thanks for dropping by. I’m a life-long fan of tennis and I want to get into data analytics so I thought, why not combine to the two together to create some fun projects for myself? In this first blog post I’d like to take another look at aces stats in tennis.</p>
 
 <p>For those who don’t know, in tennis, an ace is a serve that successfully lands in the service box and does not touch the receiving player’s racquet.</p>
 
@@ -6,7 +6,7 @@
 
 <p>Instead, I want to talk about who got aced on the most in the open era. I don’t believe this question has been asked before. It’s something I’ve been pondering about for a while so it’s about time I dig into the data to find out.</p>
 
-<p>Caveat: the data set I get is from <a href="https://github.com/JeffSackmann/tennis_atp">Jeff Sackman’s repository</a>. I am not sure how accurate or complete it is. When I crunch the data, I find there is some discrepancy between my result and the official ATP website. For example, my result shows <a href="https://docs.google.com/spreadsheets/d/1YlQAnsyW7_jmyOYFSk1WJ6O6_7u2PxgEgqcNLFfsgFY/edit#gid=262157908">John Isner has 13,936 aces</a> vs the <a href="https://www.atptour.com/en/players/john-isner/i186/player-stats">ATP’s 13,814</a> aces so take what you read below with a grain of salt.</p>
+<p>Caveat: the data set I get is from <a href="https://github.com/JeffSackmann/tennis_atp">Jeff Sackman’s repository</a>. I am not sure how accurate or complete it is. When I crunch the data, I find there is some discrepancy between my result and the official ATP website. For example, my result shows <a href="https://docs.google.com/spreadsheets/d/1YlQAnsyW7_jmyOYFSk1WJ6O6_7u2PxgEgqcNLFfsgFY/edit#gid=262157908">John Isner has 13,936 aces</a> vs the <a href="https://www.atptour.com/en/players/john-isner/i186/player-stats">ATP’s 13,814</a>. The margin of error is ~1%.</p>
 
 <p>So let’s get right into it. Here are the stats for the top 10 men for getting aced on count (can’t think of a better term),match count,  and average aced on per match. All players must have at least 100 matches.</p>
 
@@ -18,15 +18,21 @@
 
 <iframe src="https://public.tableau.com/views/Playersandaces/averageacedon?:display_count=n&amp;:showVizHome=no&amp;:embed=true" height="650" width="800"></iframe>
 
-<p>Here we see the biggest servers are not necessarily the worst returners. I’ve always thought this would be the case but my assumption was wrong. We have the journeyman Denis Kudla leading the pack with getting aced on 10 times per match followed my the almighty meme lord Tomic. What’s really surprising (to me) is Francis Tiafoe being third on the list.</p>
+<p>Here we see the biggest servers are not necessarily the worst returners. I’ve always thought this would be the case but my assumption was wrong. We have the journeyman Denis Kudla leading the pack with getting aced on 10 times per match, followed my the almighty meme lord Tomic. What’s really surprising (to me) is Francis Tiafoe being third on the list.</p>
 
-<p>Interesting to note that these players also have relatively low match counts with the exception of Oliver Rochus (and in his case, it can be explained by his 5’6” height). Perhaps if they had played more matches their averages will also drop. One way to test this hypothesis is to see where the average of players in the first set of charts faired when they had low match counts as well. This requires another SQL query or technique that I don’t know yet. Once I figured it out I will make an update.</p>
+<p>Interesting to note that these players also have relatively low match counts with the exception of Oliver Rochus. Perhaps if they had played more matches their averages will also drop. One way to test this hypothesis is to see where the average of players in the first set of charts faired when they had low match counts as well (say ~300 matches). This requires another SQL query or technique that I don’t know yet. Once I figured it out I will make an update.</p>
 
-<p>======</p>
+<p>Oliver Rochus also stood for another reason, he’s the shortest player in the list. But does his height (5’6”) have anything to do with him getting aced on so much? As seen in the first set of graphs, big players can also get aced on quite often, such as Tomas Berdych and John Isner, who are 6’5” and 6’10” respectively.</p>
 
-<p>EXTRA:</p>
+<p>So let’s see how Rochus compares with other short players. Here is a list of tennis players who are below 5’10”.</p>
 
-<p>I want to explain my work flow and my thought process so you can see how I got there. First, I download and unzip the entire ATP data set FROM Jeff’s repository. Then I load all the ATP matches from 1968 to the present into <a href="https://sqlitebrowser.org/">DB Browser for SQLite</a>. What I got is essentially one big data table for me to play with in SQLite. Each row details an individual match, winner name, loser name, and a host of other categories. It has the following columns:</p>
+<iframe src="https://public.tableau.com/views/Playersandaces/acedonheight?:display_count=n&amp;:showVizHome=no&amp;:embed=true" height="650" width="800"></iframe>
+
+<p>The data shows there is no relationship between a player’s height and him getting aced on. If anything, David Ferrer does even better than Novak Djokovic, Rafael Nadal, and Andre Agassi, who are considered the three best returners in history.</p>
+
+<h1 id="process">Process</h1>
+
+<p>Thanks for making it this far. I don’t want to include this in the main section to bore you with the technical stuff. But I want to explain my work flow and my thought process so you can see how I got there. First, I download and unzip the entire ATP data set FROM Jeff’s repository. Then I load all the ATP matches from 1968 to the present into <a href="https://sqlitebrowser.org/">DB Browser for SQLite</a>. What I got is essentially one big data table for me to play with in SQLite. Each row details an individual match, winner name, loser name, and a host of other categories. It has the following columns:</p>
 
 <blockquote>
   <p>tourney_id,	tourney_name,	surface,	draw_size,	tourney_level,	tourney_date,	match_num,	winner_id,	winner_seed,	winner_entry,	winner_name,	winner_hand,	winner_ht,	winner_ioc,	winner_age,	loser_id,	loser_seed,	loser_entry,	loser_name,	loser_hand,	loser_ht,	loser_ioc,	loser_age,	score,	best_of,	round,	minutes,	w_ace,	w_df,	w_svpt,	w_1stIn,	w_1stWon,	w_2ndWon,	w_SvGms,	w_bpSaved,	w_bpFaced,	l_ace,	l_df,	l_svpt,	l_1stIn,	l_1stWon,	l_2ndWon,	l_SvGms,	l_bpSaved,	l_bpFaced,	winner_rank,	winner_rank_points,	loser_rank,	loser_rank_points</p>
