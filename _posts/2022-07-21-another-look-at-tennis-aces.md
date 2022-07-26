@@ -48,6 +48,7 @@ The data shows there is no relationship between a player's height and him gettin
 # Top 10 
 So how does the current top 10 do in this category? Here is a look. Some of these players are very young and have low match counts well, but they still perform better than the players in top 10 averages above. Which tells me maybe those guys just aren't that good at returning. So nevermind what I said before about their averages getting lower if they play more matches.
 
+Note: Carlos Alcaraz does not have 100+ matches yet so he is replaced by Hubert Hurkacz.
 <iframe src="https://public.tableau.com/views/Playersandaces/currenttop10?:display_count=n&:showVizHome=no&:embed=true" height="650" width="800"></iframe>
 
 As you can see, the 2022 top 10 also perform very well against the top 10 from 2012. 
