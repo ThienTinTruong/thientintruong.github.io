@@ -20,6 +20,33 @@ I want to talk about who got aced on the most in the open era. I don't believe t
 
 Caveat: the data set I get is from [Jeff Sackman's repository](https://github.com/JeffSackmann/tennis_atp). I am not sure how accurate or complete it is. When I crunch the data, I find there is some discrepancy between my result and the official ATP website. For example, my result shows [John Isner has 13,936 aces](https://docs.google.com/spreadsheets/d/1YlQAnsyW7_jmyOYFSk1WJ6O6_7u2PxgEgqcNLFfsgFY/edit#gid=262157908) vs the [ATP's 13,814](https://www.atptour.com/en/players/john-isner/i186/player-stats). The margin of error is ~1%. 
 
+# Process
+
+Please feel free to skip this section if you're not interested in the technical details. But I want to explain my work flow and my thought process so you can see how I got there. First, I download and unzip the entire ATP data set FROM Jeff's repository. Then I load all the ATP matches from 1968 to the present into [DB Browser for SQLite](https://sqlitebrowser.org/). What I got is essentially one big data table for me to play with in SQLite. Each row details an individual match, winner name, loser name, and a host of other categories. It has the following columns: 
+
+> tourney_id,	tourney_name,	surface,	draw_size,	tourney_level,	tourney_date,	match_num,	winner_id,	winner_seed,	winner_entry,	winner_name,	winner_hand,	winner_ht,	winner_ioc,	winner_age,	loser_id,	loser_seed,	loser_entry,	loser_name,	loser_hand,	loser_ht,	loser_ioc,	loser_age,	score,	best_of,	round,	minutes,	w_ace,	w_df,	w_svpt,	w_1stIn,	w_1stWon,	w_2ndWon,	w_SvGms,	w_bpSaved,	w_bpFaced,	l_ace,	l_df,	l_svpt,	l_1stIn,	l_1stWon,	l_2ndWon,	l_SvGms,	l_bpSaved,	l_bpFaced,	winner_rank,	winner_rank_points,	loser_rank,	loser_rank_points
+
+Note that there are two columns for ace stats. One is w_ace (winning player's ace) and the other is l_ace (losing player's ace). To get all the aces for a player, I'd have to add up all the aces in all the matches that he plays. This means adding up all the aces in all the matches he won and lost. This is where the UNION statement comes in. Then add up all the matches he plays. Then divide the aces against the players by the matches to get the average. And finally apply the query to players to who have at least 100 matches under their belt and exclude rows with NULL values. The final SQL query would look like this:
+
+```SQL
+SELECT player_name, SUM(aces_against), SUM(matches) AS matches,  SUM(aces_against)*1.0/matches AS average_aces_against
+FROM
+(SELECT winner_name AS player_name, SUM(w_ace) AS aces_against, COUNT(winner_name) AS matches
+FROM atp_matches
+GROUP BY winner_name
+UNION ALL
+SELECT loser_name AS player_name, SUM(l_ace) AS aces_against, COUNT(loser_name) AS matches
+FROM atp_matches
+GROUP BY loser_name)
+WHERE matches >= 100
+AND player_name IS NOT NULL 
+AND matches IS NOT NULL 
+AND got_aced IS NOT NULL 
+AND aces IS NOT NULL
+GROUP BY player_name
+```
+
+And this is the [result](https://docs.google.com/spreadsheets/d/1YlQAnsyW7_jmyOYFSk1WJ6O6_7u2PxgEgqcNLFfsgFY/edit#gid=262157908). 
 
 # Analysis
 
@@ -57,34 +84,8 @@ As you can see, the 2022 top 10 also perform very well against the top 10 from 2
 
 # Conclusion
 
-This analysis dispells a couple misconceptions for me: big servers are poor returners (not really), and short players are easy to easy ace (nope), and the current top 10 perform slightly better compared to their counterparts from 10 years ago.
+This analysis dispells a couple misconceptions for me: big servers are poor returners (not really), and short players are easy to easy ace (nope). In the end, it really just boils down to the indiviual player and how good he is. 
 
 
-# Process
 
-Thanks for making it this far. I don't want to include this in the main section to bore you with the technical stuff. But I want to explain my work flow and my thought process so you can see how I got there. First, I download and unzip the entire ATP data set FROM Jeff's repository. Then I load all the ATP matches from 1968 to the present into [DB Browser for SQLite](https://sqlitebrowser.org/). What I got is essentially one big data table for me to play with in SQLite. Each row details an individual match, winner name, loser name, and a host of other categories. It has the following columns: 
-
-> tourney_id,	tourney_name,	surface,	draw_size,	tourney_level,	tourney_date,	match_num,	winner_id,	winner_seed,	winner_entry,	winner_name,	winner_hand,	winner_ht,	winner_ioc,	winner_age,	loser_id,	loser_seed,	loser_entry,	loser_name,	loser_hand,	loser_ht,	loser_ioc,	loser_age,	score,	best_of,	round,	minutes,	w_ace,	w_df,	w_svpt,	w_1stIn,	w_1stWon,	w_2ndWon,	w_SvGms,	w_bpSaved,	w_bpFaced,	l_ace,	l_df,	l_svpt,	l_1stIn,	l_1stWon,	l_2ndWon,	l_SvGms,	l_bpSaved,	l_bpFaced,	winner_rank,	winner_rank_points,	loser_rank,	loser_rank_points
-
-Note that there are two columns for ace stats. One is w_ace (winning player's ace) and the other is l_ace (losing player's ace). To get all the aces for a player, I'd have to add up all the aces in all the matches that he plays. This means adding up all the aces in all the matches he won and lost. Then add up all the matches he plays. Then divide the aces against the players by the matches to get the average. And finally apply the query to players to who have at least 100 matches under their belt and exclude rows with NULL values. The final SQL query would look like this:
-
-```SQL
-SELECT player_name, SUM(aces_against), SUM(matches) AS matches,  SUM(aces_against)*1.0/matches AS average_aces_against
-FROM
-(SELECT winner_name AS player_name, SUM(w_ace) AS aces_against, COUNT(winner_name) AS matches
-FROM atp_matches
-GROUP BY winner_name
-UNION ALL
-SELECT loser_name AS player_name, SUM(l_ace) AS aces_against, COUNT(loser_name) AS matches
-FROM atp_matches
-GROUP BY loser_name)
-WHERE matches >= 100
-AND player_name IS NOT NULL 
-AND matches IS NOT NULL 
-AND got_aced IS NOT NULL 
-AND aces IS NOT NULL
-GROUP BY player_name
-```
-
-And this is the [result](https://docs.google.com/spreadsheets/d/1YlQAnsyW7_jmyOYFSk1WJ6O6_7u2PxgEgqcNLFfsgFY/edit#gid=262157908). 
 
