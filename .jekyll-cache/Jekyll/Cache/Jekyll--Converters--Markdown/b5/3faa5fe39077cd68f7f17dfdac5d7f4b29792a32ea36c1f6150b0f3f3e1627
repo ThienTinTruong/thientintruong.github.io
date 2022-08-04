@@ -1,0 +1,12 @@
+I"�<p>I try to post once a week but juggling a full time job, watching a toddler, and doing chores around the house, it’s tough to find spare time to do this (unless I give up sleep). Anyway, enough of my complaints. For this entry, I’m doing some simple analysis of the Holy Trinity of men’s tennis. I just watched some Youtube videos on how to make a Talbeau dashboard so I’m putting what I learned into practice.</p>
+
+<p>Again, the data is from <a href="https://github.com/JeffSackmann/tennis_atp">Jeff Sackman’s repository</a>. The SQL query for this is:</p>
+<pre><code class="language-SQL">SELECT *
+FROM atp_matches
+WHERE winner_name  IN ('Roger Federer', 'Rafael Nadal', 'Novak Djokovic') 
+OR loser_name IN ('Roger Federer','Rafael Nadal', 'Novak Djokovic')
+</code></pre>
+
+<p>One of the advice in the videos is to keep it simple, so I’m starting out with just four visualization for now. As I learn more and get better I will update this to make it look more ‘professional’.</p>
+
+:ET

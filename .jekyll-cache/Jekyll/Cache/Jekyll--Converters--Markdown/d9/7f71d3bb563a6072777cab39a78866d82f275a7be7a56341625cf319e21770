@@ -1,0 +1,15 @@
+I"~<p>I try to post once a week but juggling a full time job, watching a toddler, and doing chores around the house, it’s tough to find spare time to do this (unless I give up sleep). Anyway, enough of my complaints. For this entry, I’m doing some simple analysis of the Holy Trinity of men’s tennis. I just watched some Youtube videos on how to make a Talbeau dashboard so I’m putting what I learned into practice.</p>
+
+<p>Again, the data is from <a href="https://github.com/JeffSackmann/tennis_atp">Jeff Sackman’s repository</a>. The SQL query for this is:</p>
+<pre><code class="language-SQL">SELECT *
+FROM atp_matches
+WHERE winner_name  IN ('Roger Federer', 'Rafael Nadal', 'Novak Djokovic') 
+OR loser_name IN ('Roger Federer','Rafael Nadal', 'Novak Djokovic')
+</code></pre>
+
+<p>One of the advice in the videos is to keep it simple, so I’m starting out with just four visualization for now. As you can see this dashboard already look a bit too busy for my liking. As I learn more and get better I will update this to make it look more ‘professional’.</p>
+
+<p>The dashboard is straightforward enough. There’s the title count for the big tournaments. Only the Slams are shown for now but there’s option to show the Master 1000s and smaller tournaments too. But showing everything will make it super crowded. Then there’s animated graph showing Federer, Nadal, and Djokovic climing up the rank throughout the years. And finally the win/loss records against their biggest rivals.</p>
+
+<iframe src="https://public.tableau.com/views/BIG_3_Tennis/Big3Stats?:display_count=n&amp;:showVizHome=no&amp;:embed=true" height="750" width="1000"></iframe>
+:ET
