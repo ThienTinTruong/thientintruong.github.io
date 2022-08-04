@@ -1,8 +1,8 @@
 ---
 layout: page
 title: About Me
-description: This is what I do.
+description: I like tennis.
 background: 'img/TnTOnQq.jpg'
 ---
 
-Helloooooo
+Hello, thanks for checking out my blog. I like tennis and I'm learning data analytics. This is where I go to combine both. 
